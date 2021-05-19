@@ -18,7 +18,7 @@ router.get('/:id', async(req, res) => {
         if(user.Error === "ID does not exist") {
             console.log(req.body.profileImg)
             console.log(req.body.userName)
-            user = await userData.createUser(userId, req.params.userName, req.params.profileImg);
+            user = await userData.createUser(userId, req.data.args.userName, req.data.args.profileImg);
         }
         res.json(user);
     } catch(e){
