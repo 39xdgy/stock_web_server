@@ -10,11 +10,14 @@ router.get('/', async(req, res) => {
 router.get('/:id', async(req, res) => {
     const userId = req.params.id;
     try{
-        if(typeof(userId) !== "string" || userId.length !== 20) {
+        if(typeof(userId) !== "string") {
             res.json({ERROR: "ID is not valid"});
             return;
         }
-        user = await userData.getUser(userId);
+        let user = await userData.getUser(userId);
+        if(user.Error === "ID does not exist") {
+            user = await userData.createUser(userId, req.body.userName, req.body.profileImg);
+        }
         res.json(user);
     } catch(e){
         console.log(e)
@@ -27,7 +30,7 @@ router.post('/:id', async(req, res) => {
     const name = req.body.userName;
     const img = req.body.profileImg;
     try{
-        if(typeof(userId) !== "string" || userId.length !== 20) {
+        if(typeof(userId) !== "string") {
             res.json({ERROR: "ID is not valid"});
             return;
         }
@@ -42,7 +45,7 @@ router.post('/:id', async(req, res) => {
 router.patch('/:id', async(req, res) => {
     const userId = req.params.id;
     try{
-        if(typeof(userId) !== "string" || userId.length !== 20) {
+        if(typeof(userId) !== "string") {
             res.json({ERROR: "ID is not valid"});
             return;
         }

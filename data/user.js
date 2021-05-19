@@ -26,8 +26,8 @@ async function getUser(id){
     //let obj_id = myDBfunction(id);
     const userCollections = await user();
     const user_data = await userCollections.findOne({_id: id});
-
-    if(user_data === "null") throw "Error: this user does not exist."
+    console.log(user_data)
+    if(user_data === null) return {Error: "ID does not exist"}
     return user_data
 }
 
